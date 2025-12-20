@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🎁 Une parenthèse à partager</title>
+
+<style>
+body {
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  background: linear-gradient(135deg, #1f4037, #99f2c8);
+  margin: 0;
+  padding: 20px;
+  text-align: center;
+  color: #ffffff;
+}
+
+.container {
+  max-width: 720px;
+  margin: auto;
+  background: rgba(0,0,0,0.28);
+  border-radius: 22px;
+  padding: 30px;
+}
+
+h1 { font-size: 26px; margin-bottom: 20px; }
+p  { font-size: 17px; line-height: 1.7; margin-bottom: 18px; }
+
+.button {
+  background: #ffcc00;
+  color: #000;
+  padding: 16px 28px;
+  border-radius: 35px;
+  font-weight: bold;
+  cursor: pointer;
+  display: inline-block;
+  margin-top: 25px;
+}
+
+#countdown {
+  font-size: 40px;
+  font-weight: bold;
+  display: none;
+  margin: 20px 0;
+}
+
+#videoSection { display: none; }
+
+iframe {
+  width: 100%;
+  height: 320px;
+  border-radius: 16px;
+}
+
+#istanbul {
+  display: none;
+  font-size: 30px;
+  font-weight: bold;
+  margin-top: 20px;
+  animation: fadeIn 2s ease-in-out;
+}
+
+#finalText {
+  display: none;
+  margin-top: 15px;
+  font-size: 20px;
+  animation: fadeIn 3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- MESSAGE -->
+<div class="container" id="messageSection">
+  <h1>🎁 À nos enfants</h1>
+
+  <p>
+    La vente du camping marque la fin d’une belle aventure et le début d’un nouveau chapitre.
+  </p>
+
+  <p>
+    Pour célébrer ce passage important, nous avons choisi de nous retrouver ensemble dans une destination dépaysante,
+    riche de découvertes et de moments à partager.
+  </p>
+
+  <p><strong>Rendez-vous du 13 au 17 mai 2026.</strong></p>
+  <p>Laissez-vous surprendre…</p>
+
+  <div class="button" onclick="startExperience()">
+    🎥 Découvrir la destination
+  </div>
+</div>
+
+<!-- COMPTE À REBOURS -->
+<div class="container" id="countdown">3</div>
+
+<!-- VIDEO -->
+<div class="container" id="videoSection">
+  <iframe
+    id="video"
+    src=""
+    allow="autoplay; encrypted-media"
+    allowfullscreen>
+  </iframe>
+
+  <div id="istanbul">🧭 Istanbul</div>
+  <div id="finalText">✨ À bientôt pour réserver ensemble votre vol ✈️</div>
+</div>
+
+<!-- AMBIANCE SONORE -->
+<audio id="music" preload="auto">
+  <source src="https://cdn.pixabay.com/download/audio/2022/10/25/audio_1b7b9b9c68.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+function startExperience() {
+  document.getElementById("messageSection").style.display = "none";
+  document.getElementById("countdown").style.display = "block";
+
+  let count = 3;
+  const countdown = document.getElementById("countdown");
+
+  const timer = setInterval(() => {
+    count--;
+    countdown.textContent = count;
+    if (count === 0) {
+      clearInterval(timer);
+      countdown.style.display = "none";
+      launchVideo();
+    }
+  }, 1000);
+}
+
+function launchVideo() {
+  document.getElementById("videoSection").style.display = "block";
+
+  document.getElementById("video").src =
+    "https://www.youtube.com/embed/qhaznhuhXgg?autoplay=1&mute=1";
+
+  const music = document.getElementById("music");
+  music.volume = 0.4;
+  music.play();
+
+  // Fin de vidéo (~60 secondes)
+  setTimeout(() => {
+    document.getElementById("istanbul").style.display = "block";
+    document.getElementById("finalText").style.display = "block";
+    music.pause();
+  }, 60000);
+}
+</script>
+
+</body>
+</html>
+
