@@ -37,6 +37,17 @@ p  { font-size: 17px; line-height: 1.7; margin-bottom: 18px; }
   cursor: pointer;
   display: inline-block;
   margin-top: 20px;
+  text-decoration: none;
+}
+
+/* Animation du bouton pendant le compte à rebours */
+.button.blink {
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
 }
 
 #countdown {
@@ -47,13 +58,6 @@ p  { font-size: 17px; line-height: 1.7; margin-bottom: 18px; }
 }
 
 #videoSection { display: none; }
-
-#fb-reel iframe {
-  width: 100% !important; /* Reel prend 100% de la largeur */
-  max-width: 720px;
-  height: auto !important;
-  aspect-ratio: 16/9;
-}
 
 #finalText {
   display: none;
@@ -87,7 +91,7 @@ p  { font-size: 17px; line-height: 1.7; margin-bottom: 18px; }
   <p><strong>Rendez-vous du 13 au 17 mai 2026.</strong></p>
   <p>Laissez-vous surprendre…</p>
 
-  <div class="button" onclick="startExperience()">
+  <div class="button" id="startButton" onclick="startExperience()">
     🎥 Découvrir la destination
   </div>
 </div>
@@ -95,12 +99,12 @@ p  { font-size: 17px; line-height: 1.7; margin-bottom: 18px; }
 <!-- COMPTE À REBOURS -->
 <div class="container" id="countdown">3</div>
 
-<!-- REEL FACEBOOK -->
+<!-- BOUTON VERS LE REEL FACEBOOK -->
 <div class="container" id="videoSection">
-  <div id="fb-reel">
-    <blockquote class="fb-reel" data-href="https://www.facebook.com/reel/1522243655656453" data-width="500" data-show-text="false">
-    </blockquote>
-  </div>
+  <p>🎥 Cliquez ci-dessous pour découvrir la vidéo :</p>
+  <a href="https://www.facebook.com/reel/1522243655656453" target="_blank" class="button">
+    Voir la vidéo Facebook
+  </a>
   <div id="finalText">
     ✨ À bientôt pour réserver ensemble votre vol ✈️ <br> Alice & Jean-Michel
   </div>
@@ -109,6 +113,9 @@ p  { font-size: 17px; line-height: 1.7; margin-bottom: 18px; }
 <!-- SCRIPT -->
 <script>
 function startExperience() {
+  const btn = document.getElementById("startButton");
+  btn.classList.add("blink"); // démarrer l'animation du bouton
+
   document.getElementById("messageSection").style.display = "none";
   document.getElementById("countdown").style.display = "block";
 
@@ -121,6 +128,7 @@ function startExperience() {
     if (count < 0) {
       clearInterval(timer);
       countdown.style.display = "none";
+      btn.classList.remove("blink"); // arrêter l'animation
       showVideo();
     }
   }, 1000);
@@ -129,17 +137,6 @@ function startExperience() {
 function showVideo() {
   document.getElementById("videoSection").style.display = "block";
   document.getElementById("finalText").style.display = "block";
-
-  // Ajouter le SDK Facebook si pas déjà présent
-  if (!document.getElementById('fb-sdk')) {
-    const fbScript = document.createElement('script');
-    fbScript.id = 'fb-sdk';
-    fbScript.src = "https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v16.0";
-    fbScript.async = true;
-    document.body.appendChild(fbScript);
-  } else if (typeof(FB) !== "undefined") {
-    FB.XFBML.parse(); // recharge si déjà chargé
-  }
 }
 </script>
 
